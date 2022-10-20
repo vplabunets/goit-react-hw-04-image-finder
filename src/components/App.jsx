@@ -1,16 +1,13 @@
+import { Button } from './Button/Button';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Searcbar } from './Searchbar/Searchbar';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+      <Searcbar />
+      <ImageGallery />
+      <Button buttonText={'Load more'} />
     </div>
   );
 };

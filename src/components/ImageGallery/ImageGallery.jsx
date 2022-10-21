@@ -1,14 +1,13 @@
-import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import React, { Component } from 'react';
-import { Gallery } from './ImageGallery.styled';
 import axios from 'axios';
+import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { ImageGalleryS } from 'components/ImageGallery/ImageGallery.styled';
 axios.defaults.baseURL = 'https://pixabay.com/';
 export class ImageGallery extends Component {
   state = { datalist: null, currentPage: 1 };
 
   async componentDidUpdate(prevProps, prevState) {
-    console.log(this.props);
-
+    console.log(prevProps);
     if (prevProps !== this.props) {
       try {
         const response = await axios.get('api', {
@@ -18,11 +17,17 @@ export class ImageGallery extends Component {
             image_type: 'photo',
             orientation: 'horizontal',
             per_page: 12,
-            page: this.state.currentPage,
+            page: this.props.currentPage,
           },
         });
         console.log(this.props.querry);
-        this.setState({ dataList: response.data.hits });
+        if (this.state.datalist === null) {
+          console.log(this.state.dataList);
+          this.setState({ dataList: response.data.hits });
+        }
+        this.setState({
+          dataList: [...prevState.dataList, ...response.data.hits],
+        });
       } catch (e) {
         console.log(e);
       }
@@ -31,16 +36,18 @@ export class ImageGallery extends Component {
   render() {
     if (this.state.dataList) {
       return (
-        <Gallery className="gallery">
-          {this.state.dataList.map(({ id, pageURL, previewURL, user }) => (
-            <ImageGalleryItem
-              key={id}
-              photoUrl={pageURL}
-              photoPreviewUrl={previewURL}
-              user={user}
-            />
-          ))}
-        </Gallery>
+        <ImageGalleryS>
+          {this.state.dataList.map(
+            ({ id, largeImageURL, webformatURL, user }) => (
+              <ImageGalleryItem
+                key={id}
+                photoUrl={largeImageURL}
+                photoPreviewUrl={webformatURL}
+                user={user}
+              />
+            )
+          )}
+        </ImageGalleryS>
       );
     } else {
       return;

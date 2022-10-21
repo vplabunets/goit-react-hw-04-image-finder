@@ -1,11 +1,17 @@
 import React from 'react';
+import { ModalWindow, Overlay } from './Modal.styled';
 
-export const Modal = () => {
+export const Modal = ({ photoUrl, user, onClose }) => {
   return (
-    <div className="overlay">
-      <div className="modal">
-        <img src="" alt="" />
-      </div>
-    </div>
+    <Overlay
+      onClick={() => {
+        onClose();
+      }}
+      className="overlay"
+    >
+      <ModalWindow onClick={e => e.stopPropagation()}>
+        <img src={photoUrl} alt={user} />
+      </ModalWindow>
+    </Overlay>
   );
 };

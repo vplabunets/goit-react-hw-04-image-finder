@@ -1,8 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const Gallery = styled.ul`
+export const ImageGalleryS = styled.ul`
   display: grid;
-  grid: 10px;
-  grid-template-columns: repeat(3, calc((100vw - 3 * 10px) / 3));
+  max-width: calc(100vw - 48px);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-gap: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
 `;

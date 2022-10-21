@@ -1,7 +1,12 @@
-import { Btn } from 'components/Button/Button.styled';
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { toast } from 'react-toastify';
+
+import {
+  SearchBarS,
+  SearchForm,
+  SearchFormButton,
+  SearchFormInput,
+} from './Searchbar.styled';
 export class Searchbar extends Component {
   state = {
     querry: '',
@@ -25,23 +30,22 @@ export class Searchbar extends Component {
 
   render() {
     return (
-      <header className="searchbar">
-        <form name="xxx" className="form" onSubmit={this.handleSubmit}>
-          <Btn type="submit" className="button">
-            <span className="button-label">Search</span>
-          </Btn>
+      <SearchBarS>
+        <SearchForm name="xxx" onSubmit={this.handleSubmit}>
+          <SearchFormButton type="submit" className="button">
+            <span>Search</span>
+          </SearchFormButton>
 
-          <input
+          <SearchFormInput
             name="querry"
             value={this.state.querry}
             onChange={this.handleChange}
-            className="input"
             type="text"
             // autocomplete="off"
             placeholder="Search images and photos"
           />
-        </form>
-      </header>
+        </SearchForm>
+      </SearchBarS>
     );
   }
 }

@@ -8,17 +8,22 @@ import {
   LoaderWrap,
 } from 'components/ImageGallery/ImageGallery.styled';
 axios.defaults.baseURL = 'https://pixabay.com/';
+
 export class ImageGallery extends Component {
-  state = { datalist: null, currentPage: 1, isLoadingGallery: false };
+  state = { dataList: null, currentPage: 0, isLoadingGallery: false, total: 0 };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevProps.querry !== this.props.querry) {
-      this.setState({ dataList: null });
+    console.log('prev', prevProps.query);
+    console.log('current', this.props.query);
+    if (this.state.currentPage !== this.props.currentPage) {
+      // this.setState({ dataList: null });
+      this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
+
       try {
         this.setState({ isLoadingGallery: true });
         const response = await axios.get('api', {
           params: {
-            q: this.props.querry,
+            q: this.props.query,
             key: '29714079-b64164321d422be07299c5198',
             image_type: 'photo',
             orientation: 'horizontal',
@@ -26,23 +31,31 @@ export class ImageGallery extends Component {
             page: this.props.currentPage,
           },
         });
-        console.log(response.data.hits.length);
+        // console.log(response.data.hits);
 
         if (!response.data.hits.length) {
-          alert('Your querry is not correct. Please, make new querry');
+          alert('Your query is not correct. Please, make new query');
+        } else if (this.state.dataList === null) {
+          this.setState({
+            dataList: response.data.hits,
+            total: response.data.totalHits,
+          });
+          this.props.handleTotalHits(response.data.totalHits);
+          // console.log('data recorded', this.state.datalist);
+          console.log(response.data.hits);
+        } else {
+          console.log(prevState.dataList);
+          this.setState({
+            dataList: [...prevState.dataList, ...response.data.hits],
+          });
         }
-        if (this.state.datalist === null) {
-          this.setState({ dataList: response.data.hits });
-        }
-        this.setState({
-          dataList: [...prevState.dataList, ...response.data.hits],
-        });
       } catch (e) {
         console.log(e);
       } finally {
         this.setState({ isLoadingGallery: false });
       }
     }
+    // console.log('If не працює');
   }
   render() {
     const { dataList, isLoadingGallery } = this.state;
@@ -78,27 +91,4 @@ export class ImageGallery extends Component {
       </>
     );
   }
-
-  // render() {
-  //   const { dataList, isLoadingGallery } = this.state;
-  //   if (dataList) {
-  //     return { isLoadingGallery } ? (
-  //       'isLoadingGallery'
-  //     ) : (
-  //       <ImageGalleryS>
-  //         {/* {isLoadingGallery && <div>dsadas</div>} */}
-  //         {dataList.map(({ id, largeImageURL, webformatURL, user }) => (
-  //           <ImageGalleryItem
-  //             key={id}
-  //             photoUrl={largeImageURL}
-  //             photoPreviewUrl={webformatURL}
-  //             user={user}
-  //           />
-  //         ))}
-  //       </ImageGalleryS>
-  //     );
-  //   } else {
-  //     return;
-  //   }
-  // }
 }

@@ -5,27 +5,35 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { AppWrap } from './App.styled';
 export class App extends Component {
   state = {
-    querry: null,
-    currentPage: 1,
+    query: null,
+    currentPage: 0,
     isLoad: false,
+    dataList: null,
+    total: 0,
   };
   handleFormSubmit = onSubmit => {
-    this.setState({ querry: onSubmit });
+    this.setState({ query: onSubmit });
+    this.setState({ currentPage: 1 });
   };
   handleLoadMore = onClick => {
     this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
     console.log(this.state.currentPage);
   };
 
+  handleTotalHits = totalHits => {
+    this.setState({ total: totalHits });
+  };
   render() {
     return (
       <AppWrap>
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
+          handleTotalHits={this.handleTotalHits}
           currentPage={this.state.currentPage}
-          querry={this.state.querry}
+          query={this.state.query}
+          dataList={this.state.dataList}
         />
-        {this.state.querry && (
+        {this.state.total > 12 && (
           <Button onClick={this.handleLoadMore} buttonText={'Load more'} />
         )}
       </AppWrap>

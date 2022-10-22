@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 import {
   SearchBarS,
@@ -9,43 +9,58 @@ import {
 } from './Searchbar.styled';
 export class Searchbar extends Component {
   state = {
-    querry: '',
+    query: '',
   };
 
   handleChange = evt => {
     this.setState({
-      [evt.currentTarget.name]: evt.currentTarget.value.toLowerCase(),
+      [evt.currentTarget.name]: evt.currentTarget.value.trim().toLowerCase(),
     });
-    console.log(this.state.querry);
+    console.log(this.state.query);
   };
   handleSubmit = evt => {
-    if (this.state.querry.trim() === '') {
-      toast.error('Please input correct querry');
+    if (!this.state.query.trim()) {
+      alert('Please input correct query');
+      toast.error('Please input correct query', {
+        position: 'top-right',
+
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+
       return;
     }
     evt.preventDefault();
-    this.props.onSubmit(this.state.querry);
-    this.setState({ querry: '' });
+    this.props.onSubmit(this.state.query);
+    this.setState({ query: '' });
   };
 
   render() {
     return (
-      <SearchBarS>
-        <SearchForm name="xxx" onSubmit={this.handleSubmit}>
-          <SearchFormButton type="submit" className="button">
-            <span>Search</span>
-          </SearchFormButton>
+      <>
+        <SearchBarS>
+          <SearchForm name="xxx" onSubmit={this.handleSubmit}>
+            <SearchFormButton type="submit" className="button">
+              <span>Search</span>
+            </SearchFormButton>
 
-          <SearchFormInput
-            name="querry"
-            value={this.state.querry}
-            onChange={this.handleChange}
-            type="text"
-            autocomplete="off"
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </SearchBarS>
+            <SearchFormInput
+              name="query"
+              value={this.state.query}
+              onChange={this.handleChange}
+              type="text"
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+            />
+          </SearchForm>
+        </SearchBarS>
+        <ToastContainer width={100} />
+      </>
     );
   }
 }

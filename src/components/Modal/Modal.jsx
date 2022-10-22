@@ -4,10 +4,14 @@ import { ModalWindow, Overlay } from './Modal.styled';
 export const Modal = ({ photoUrl, user, onClose }) => {
   return (
     <Overlay
-      onClick={() => {
-        onClose();
+      onClick={event => {
+        onClose(event);
+        console.log(event);
       }}
-      className="overlay"
+      onKeyUp={event => {
+        console.log(event);
+        onClose(event);
+      }}
     >
       <ModalWindow onClick={e => e.stopPropagation()}>
         <img src={photoUrl} alt={user} />

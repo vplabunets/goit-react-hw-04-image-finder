@@ -41,7 +41,7 @@ export class Searchbar extends Component {
             value={this.state.querry}
             onChange={this.handleChange}
             type="text"
-            // autocomplete="off"
+            autocomplete="off"
             placeholder="Search images and photos"
           />
         </SearchForm>

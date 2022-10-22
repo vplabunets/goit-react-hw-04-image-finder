@@ -9,10 +9,11 @@ export class ImageGalleryItem extends Component {
 
   openModal = event => {
     this.setState({ isModalOpen: true });
-    console.log(this.state);
+    // console.log(this.state);
   };
-  closeModal = () => {
+  closeModal = event => {
     this.setState({ isModalOpen: false });
+    // console.log(event);
   };
   render() {
     const { photoPreviewUrl, user, photoUrl } = this.props;

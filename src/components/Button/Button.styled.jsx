@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 export const Btn = styled.button`
+  margin: 0 auto;
+  width: 150px;
   padding: 8px 16px;
   border-radius: 2px;
   background-color: #3f51b5;

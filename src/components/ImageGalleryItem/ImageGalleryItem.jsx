@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { Modal } from 'components/Modal/Modal';
 import PropTypes from 'prop-types';
-
 import { GalImg, GalItem } from './ImageGalleryItem.styled';
 export class ImageGalleryItem extends Component {
   state = {
     isModalOpen: false,
   };
 
-  openModal = event => {
+  openModal = () => {
     this.setState({ isModalOpen: true });
   };
-  closeModal = event => {
+  closeModal = () => {
     this.setState({ isModalOpen: false });
   };
   render() {
@@ -30,5 +29,5 @@ export class ImageGalleryItem extends Component {
 ImageGalleryItem.propTypes = {
   photoPreviewUrl: PropTypes.string.isRequired,
   photoUrl: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
 };

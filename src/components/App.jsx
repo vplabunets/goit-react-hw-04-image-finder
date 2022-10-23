@@ -5,7 +5,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { AppWrap } from './App.styled';
 export class App extends Component {
   state = {
-    query: null,
+    query: '',
     currentPage: 0,
     isLoad: false,
     dataList: null,

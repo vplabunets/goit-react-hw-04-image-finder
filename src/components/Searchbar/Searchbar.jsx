@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-// import { toast, ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   SearchBarS,
   SearchForm,
@@ -19,18 +20,7 @@ export class Searchbar extends Component {
   };
   handleSubmit = evt => {
     if (!this.state.query.trim()) {
-      alert('Please, input correct query');
-      // toast('Please input correct query', {
-      //   position: 'top-right',
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: 'light',
-      // } );
-      return;
+      toast.error('Please input correct query');
     }
     evt.preventDefault();
     this.props.onSubmit(this.state.query);
@@ -56,9 +46,9 @@ export class Searchbar extends Component {
             />
           </SearchForm>
         </SearchBarS>
-        {/* <ToastContainer
+        <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -67,7 +57,7 @@ export class Searchbar extends Component {
           draggable
           pauseOnHover
           theme="light"
-        /> */}
+        />
       </>
     );
   }

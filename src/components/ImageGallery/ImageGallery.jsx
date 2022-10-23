@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+import { apiPixabay } from 'api/apiPixabay';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ImageGalleryS } from 'components/ImageGallery/ImageGallery.styled';
 import { Loader } from 'components/Loader/Loader';
-// axios.defaults.baseURL = 'https://pixabay.com/';
 
 export class ImageGallery extends Component {
   state = { dataList: null, isLoadingGallery: false, total: 0 };
@@ -14,18 +15,9 @@ export class ImageGallery extends Component {
     if (prevProps.currentPage !== currentPage || query !== prevProps.query) {
       try {
         this.setState({ isLoadingGallery: true });
-        const response = await axios.get('https://pixabay.com/api', {
-          params: {
-            q: query,
-            key: '29714079-b64164321d422be07299c5198',
-            image_type: 'photo',
-            orientation: 'horizontal',
-            per_page: 12,
-            page: currentPage,
-          },
-        });
+        const response = await apiPixabay(query, currentPage);
         if (!response.data.hits.length) {
-          alert('Your query is not correct. Please, make new query');
+          toast.error('Your query is not correct. Please, input new query');
         } else if (dataList === null && query !== prevProps.query) {
           this.setState({
             dataList: response.data.hits,
@@ -38,6 +30,9 @@ export class ImageGallery extends Component {
           });
         }
       } catch (e) {
+        toast.error(
+          'Response for you request is not correct. Please, send your request again'
+        );
         console.log(e);
       } finally {
         this.setState({ isLoadingGallery: false });
@@ -51,16 +46,28 @@ export class ImageGallery extends Component {
         {isLoadingGallery && <Loader />}
         {dataList && (
           <ImageGalleryS>
-            {dataList.map(({ id, largeImageURL, webformatURL, user }) => (
+            {dataList.map(({ id, largeImageURL, webformatURL, tags }) => (
               <ImageGalleryItem
                 key={id}
                 photoUrl={largeImageURL}
                 photoPreviewUrl={webformatURL}
-                user={user}
+                tags={tags}
               />
             ))}
           </ImageGalleryS>
         )}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </>
     );
   }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { ImageGalleryS } from 'components/ImageGallery/ImageGallery.styled';
 import { Loader } from 'components/Loader/Loader';
-axios.defaults.baseURL = 'https://pixabay.com/';
+// axios.defaults.baseURL = 'https://pixabay.com/';
 
 export class ImageGallery extends Component {
   state = { dataList: null, isLoadingGallery: false, total: 0 };
@@ -14,7 +14,7 @@ export class ImageGallery extends Component {
     if (prevProps.currentPage !== currentPage || query !== prevProps.query) {
       try {
         this.setState({ isLoadingGallery: true });
-        const response = await axios.get('api', {
+        const response = await axios.get('https://pixabay.com/api', {
           params: {
             q: query,
             key: '29714079-b64164321d422be07299c5198',

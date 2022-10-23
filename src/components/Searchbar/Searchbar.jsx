@@ -47,7 +47,7 @@ export class Searchbar extends Component {
             </SearchFormButton>
             <SearchFormInput
               name="query"
-              value={this.state.query}
+              value={query}
               onChange={this.handleChange}
               type="text"
               autoComplete="off"

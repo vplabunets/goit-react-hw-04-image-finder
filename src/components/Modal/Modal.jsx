@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ModalWindow, Overlay } from './Modal.styled';
 
 export class Modal extends Component {
@@ -10,21 +11,26 @@ export class Modal extends Component {
     window.removeEventListener('keydown', this.props.onClose);
   }
   render() {
+    const { photoUrl, tags, onClose } = this.props;
     return (
       <Overlay
         onClick={event => {
-          this.props.onClose(event);
-          console.log(event);
+          onClose(event);
         }}
         onKeyUp={event => {
-          console.log(event);
-          this.props.onClose(event);
+          onClose(event);
         }}
       >
         <ModalWindow onClick={e => e.stopPropagation()}>
-          <img src={this.props.photoUrl} alt={this.props.user} />
+          <img src={photoUrl} alt={tags} />
         </ModalWindow>
       </Overlay>
     );
   }
 }
+
+Modal.propTypes = {
+  tags: PropTypes.string.isRequired,
+  photoUrl: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

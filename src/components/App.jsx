@@ -17,23 +17,23 @@ export class App extends Component {
   };
   handleLoadMore = onClick => {
     this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
-    console.log(this.state.currentPage);
   };
 
   handleTotalHits = totalHits => {
     this.setState({ total: totalHits });
   };
   render() {
+    const { currentPage, query, dataList, total } = this.state;
     return (
       <AppWrap>
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
           handleTotalHits={this.handleTotalHits}
-          currentPage={this.state.currentPage}
-          query={this.state.query}
-          dataList={this.state.dataList}
+          currentPage={currentPage}
+          query={query}
+          dataList={dataList}
         />
-        {this.state.total > 12 && (
+        {total > 12 && (
           <Button onClick={this.handleLoadMore} buttonText={'Load more'} />
         )}
       </AppWrap>

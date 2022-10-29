@@ -1,42 +1,37 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Button } from './Button/Button';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
 import { AppWrap } from './App.styled';
-export class App extends Component {
-  state = {
-    query: '',
-    currentPage: 0,
-    isLoad: false,
-    dataList: null,
-    total: 0,
-  };
-  handleFormSubmit = onSubmit => {
-    this.setState({ query: onSubmit });
-    this.setState({ currentPage: 1 });
-  };
-  handleLoadMore = onClick => {
-    this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
-  };
 
-  handleTotalHits = totalHits => {
-    this.setState({ total: totalHits });
+export const App = () => {
+  const [query, setQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const handleFormSubmit = onSubmit => {
+    setQuery(onSubmit);
+    setCurrentPage(1);
   };
-  render() {
-    const { currentPage, query, dataList, total } = this.state;
-    return (
-      <AppWrap>
-        <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery
-          handleTotalHits={this.handleTotalHits}
-          currentPage={currentPage}
-          query={query}
-          dataList={dataList}
-        />
-        {total > 12 && (
-          <Button onClick={this.handleLoadMore} buttonText={'Load more'} />
-        )}
-      </AppWrap>
-    );
-  }
-}
+  const handleLoadMore = () => {
+    setCurrentPage(prevState => prevState + 1);
+  };
+  const handleTotalHits = totalHits => {
+    setTotal(totalHits);
+  };
+  return (
+    <AppWrap>
+      <Searchbar onSubmit={handleFormSubmit} />
+      <ImageGallery
+        handleTotalHits={handleTotalHits}
+        currentPage={currentPage}
+        query={query}
+        // dataList1={dataList}
+      />
+      {total > 12 && (
+        <Button onClick={handleLoadMore} buttonText={'Load more'} />
+      )}
+    </AppWrap>
+  );
+  // }
+};

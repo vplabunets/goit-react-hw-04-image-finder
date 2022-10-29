@@ -1,28 +1,24 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Btn } from './Button.styled';
 
-export class Button extends Component {
-  state = {
-    currentPage: 1,
-  };
+export const Button = ({ onClick, buttonText }) => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    this.props.onClick(this.state.currentPage);
-    this.setState({ querry: '' });
+    onClick(currentPage);
+    setCurrentPage({ querry: '' });
   };
 
-  render() {
-    return (
-      <>
-        <Btn onClick={this.handleSubmit} type="button">
-          {this.props.buttonText}
-        </Btn>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Btn onClick={handleSubmit} type="button">
+        {buttonText}
+      </Btn>
+    </>
+  );
+};
 Button.propTypes = {
   buttonText: PropTypes.string.isRequired,
 };

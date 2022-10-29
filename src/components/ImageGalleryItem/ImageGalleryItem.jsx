@@ -1,30 +1,27 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'components/Modal/Modal';
 import PropTypes from 'prop-types';
 import { GalImg, GalItem } from './ImageGalleryItem.styled';
-export class ImageGalleryItem extends Component {
-  state = {
-    isModalOpen: false,
+
+export const ImageGalleryItem = ({ photoPreviewUrl, tags, photoUrl }) => {
+  const [isModalOpen, setiIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setiIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setiIsModalOpen(false);
   };
 
-  openModal = () => {
-    this.setState({ isModalOpen: true });
-  };
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
-  };
-  render() {
-    const { photoPreviewUrl, tags, photoUrl } = this.props;
-    return (
-      <GalItem className="gallery-item">
-        <GalImg onClick={this.openModal} src={photoPreviewUrl} alt={tags} />
-        {this.state.isModalOpen && (
-          <Modal photoUrl={photoUrl} tags={tags} onClose={this.closeModal} />
-        )}
-      </GalItem>
-    );
-  }
-}
+  return (
+    <GalItem className="gallery-item">
+      <GalImg onClick={openModal} src={photoPreviewUrl} alt={tags} />
+      {isModalOpen && (
+        <Modal photoUrl={photoUrl} tags={tags} onClose={closeModal} />
+      )}
+    </GalItem>
+  );
+};
 
 ImageGalleryItem.propTypes = {
   photoPreviewUrl: PropTypes.string.isRequired,

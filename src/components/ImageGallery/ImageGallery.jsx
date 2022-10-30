@@ -81,7 +81,9 @@ export const ImageGallery = ({ currentPage, handleTotalHits, query }) => {
       console.log(query);
       return;
     }
+
     xxx(query, currentPage);
+    // eslint-disable-next-line
   }, [query, currentPage]);
 
   return (

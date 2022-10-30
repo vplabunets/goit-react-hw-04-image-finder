@@ -78,6 +78,7 @@ export const ImageGallery = ({ currentPage, handleTotalHits, query }) => {
 
   useEffect(() => {
     if (!query) {
+      console.log(query);
       return;
     }
     xxx(query, currentPage);

@@ -5,7 +5,6 @@ import { GalImg, GalItem } from './ImageGalleryItem.styled';
 
 export const ImageGalleryItem = ({ photoPreviewUrl, tags, photoUrl }) => {
   const [isModalOpen, setiIsModalOpen] = useState(false);
-
   const openModal = () => {
     setiIsModalOpen(true);
   };

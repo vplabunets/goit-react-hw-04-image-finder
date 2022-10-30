@@ -2,52 +2,17 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { apiPixabay } from 'api/apiPixabay';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { Loader } from 'components/Loader/Loader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ImageGalleryS } from 'components/ImageGallery/ImageGallery.styled';
-import { Loader } from 'components/Loader/Loader';
 
 export const ImageGallery = ({ currentPage, handleTotalHits, query }) => {
   const [dataList2, setDataList2] = useState(null);
   const [isLoadingGallery, setIsLoadingGallery] = useState(null);
   const [thisQuery, setThisQuerry] = useState(null);
 
-  // const yyy = useCallback(
-  //   async (query, currentPage) => {
-  //     try {
-  //       setIsLoadingGallery(true);
-
-  //       if (thisPage !== currentPage || query !== thisQuery) {
-  //         setThisPage(currentPage);
-  //         setThisQuerry(query);
-
-  //         // console.log(response.data.hits.length);
-
-  //         const response = await apiPixabay(query, currentPage);
-  //         if (!response.data.hits.length) {
-  //           toast.error('Your query is not correct. Please, input new query');
-  //         } else if (dataList2 === null) {
-  //           setDataList2(response.data.hits);
-  //           setIsLoadingGallery(true);
-  //           handleTotalHits(response.data.totalHits);
-  //         } else {
-  //           // console.log(prevState.dataList2);
-  //           setDataList2([...dataList2, ...response.data.hits]);
-  //         }
-  //       }
-  //     } catch (e) {
-  //       toast.error(
-  //         'Response for you request is not correct. Please, send your request again'
-  //       );
-  //       console.log(e);
-  //     } finally {
-  //       setIsLoadingGallery(false);
-  //     }
-  //   },
-  //   [dataList2, handleTotalHits]
-  // );
-
-  async function xxx(query, currentPage) {
+  async function handleQueryData(query, currentPage) {
     try {
       setIsLoadingGallery(true);
 
@@ -78,11 +43,9 @@ export const ImageGallery = ({ currentPage, handleTotalHits, query }) => {
 
   useEffect(() => {
     if (!query) {
-      console.log(query);
       return;
     }
-
-    xxx(query, currentPage);
+    handleQueryData(query, currentPage);
     // eslint-disable-next-line
   }, [query, currentPage]);
 

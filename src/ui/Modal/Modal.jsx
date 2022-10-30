@@ -7,11 +7,10 @@ export const Modal = ({ onClose, photoUrl, tags }) => {
   useEffect(() => {
     window.addEventListener('keydown', onClose);
     return () => {
-      window.removeEventListener('keydown', this.props.onClose);
+      window.removeEventListener('keydown', onClose);
     };
   }, [onClose]);
 
-  // const { photoUrl, tags, onClose } = this.props;
   return (
     <Overlay
       onClick={event => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from './Button/Button';
+import { Button } from '../ui/Button/Button';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
 import { AppWrap } from './App.styled';
@@ -26,12 +26,10 @@ export const App = () => {
         handleTotalHits={handleTotalHits}
         currentPage={currentPage}
         query={query}
-        // dataList1={dataList}
       />
       {total > 12 && (
         <Button onClick={handleLoadMore} buttonText={'Load more'} />
       )}
     </AppWrap>
   );
-  // }
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from 'components/Modal/Modal';
+import { Modal } from 'ui/Modal/Modal';
 import PropTypes from 'prop-types';
 import { GalImg, GalItem } from './ImageGalleryItem.styled';
 

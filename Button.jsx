@@ -27,6 +27,6 @@ const Button = ({ value }) => {
   // let tag = getBtnName(value);
   // let markup = < {tag} >
   // return setTimeout({<getBtnName(value)/>}, 1000);
-  return '<' + getBtnName(value) + '/>';
+  return `<  ${getBtnName(value)}  />`;
 };
 export default Button;
